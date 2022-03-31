@@ -17,10 +17,12 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+
+export default defineComponent({
   props: {
-    modelValue: File,
+    modelValue: File as PropType<File | null>,
     label: String,
     accept: String,
     errors: {
@@ -32,24 +34,24 @@ export default {
   watch: {
     modelValue(value) {
       if (!value) {
-        this.$refs.file.value = ''
+        (this.$refs.file as HTMLInputElement).value = ''
       }
     },
   },
   methods: {
-    filesize(size) {
+    filesize(size: number) {
       var i = Math.floor(Math.log(size) / Math.log(1024))
-      return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
+      return (size / Math.pow(1024, i)).toFixed(2) + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
     },
     browse() {
-      this.$refs.file.click()
+      (this.$refs.file as HTMLElement).click()
     },
-    change(e) {
-      this.$emit('update:modelValue', e.target.files[0])
+    change(e: Event) {
+      this.$emit('update:modelValue', (e.target as HTMLInputElement).files?.[0])
     },
     remove() {
       this.$emit('update:modelValue', null)
     },
   },
-}
+})
 </script>

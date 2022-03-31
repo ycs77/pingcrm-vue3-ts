@@ -1,3 +1,4 @@
+import './global'
 import { createSSRApp, h } from 'vue'
 import { renderToString } from '@vue/server-renderer'
 import { createInertiaApp } from '@inertiajs/inertia-vue3'
@@ -8,9 +9,9 @@ createServer((page) => createInertiaApp({
   render: renderToString,
   resolve: name => require(`./Pages/${name}`),
   title: title => title ? `${title} - Ping CRM` : 'Ping CRM',
-  setup({ app, props, plugin }) {
+  setup({ App, props, plugin }) {
     return createSSRApp({
-      render: () => h(app, props),
+      render: () => h(App, props),
     }).use(plugin)
   },
 }))

@@ -59,17 +59,19 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
-import Icon from '@/Shared/Icon'
+import Icon from '@/Shared/Icon.vue'
 import pickBy from 'lodash/pickBy'
-import Layout from '@/Shared/Layout'
+import Layout from '@/Shared/Layout.vue'
 import throttle from 'lodash/throttle'
 import mapValues from 'lodash/mapValues'
-import Pagination from '@/Shared/Pagination'
-import SearchFilter from '@/Shared/SearchFilter'
+import Pagination from '@/Shared/Pagination.vue'
+import SearchFilter from '@/Shared/SearchFilter.vue'
+import { Filters, ModelPagination } from '@/types'
 
-export default {
+export default defineComponent({
   components: {
     Head,
     Icon,
@@ -79,8 +81,15 @@ export default {
   },
   layout: Layout,
   props: {
-    filters: Object,
-    organizations: Object,
+    filters: {
+      type: Object as PropType<Filters>,
+      required: true,
+    },
+    organizations: {
+      /* eslint-disable no-undef */
+      type: Object as PropType<ModelPagination<App.Models.Organization>>,
+      required: true,
+    },
   },
   data() {
     return {
@@ -94,6 +103,7 @@ export default {
     form: {
       deep: true,
       handler: throttle(function () {
+        // @ts-ignore
         this.$inertia.get('/organizations', pickBy(this.form), { preserveState: true })
       }, 150),
     },
@@ -103,5 +113,5 @@ export default {
       this.form = mapValues(this.form, () => null)
     },
   },
-}
+})
 </script>

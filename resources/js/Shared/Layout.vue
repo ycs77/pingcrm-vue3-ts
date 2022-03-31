@@ -20,20 +20,20 @@
             </dropdown>
           </div>
           <div class="md:text-md flex items-center justify-between p-4 w-full text-sm bg-white border-b md:px-12 md:py-0">
-            <div class="mr-4 mt-1">{{ auth.user.account.name }}</div>
+            <div class="mr-4 mt-1">{{ auth.user?.account.name }}</div>
             <dropdown class="mt-1" placement="bottom-end">
               <template #default>
                 <div class="group flex items-center cursor-pointer select-none">
                   <div class="mr-1 text-gray-700 group-hover:text-indigo-600 focus:text-indigo-600 whitespace-nowrap">
-                    <span>{{ auth.user.first_name }}</span>
-                    <span class="hidden md:inline">&nbsp;{{ auth.user.last_name }}</span>
+                    <span>{{ auth.user?.first_name }}</span>
+                    <span class="hidden md:inline">&nbsp;{{ auth.user?.last_name }}</span>
                   </div>
                   <icon class="w-5 h-5 fill-gray-700 group-hover:fill-indigo-600 focus:fill-indigo-600" name="cheveron-down" />
                 </div>
               </template>
               <template #dropdown>
                 <div class="mt-2 py-2 text-sm bg-white rounded shadow-xl">
-                  <Link class="block px-6 py-2 hover:text-white hover:bg-indigo-500" :href="`/users/${auth.user.id}/edit`">My Profile</Link>
+                  <Link class="block px-6 py-2 hover:text-white hover:bg-indigo-500" :href="`/users/${auth.user?.id}/edit`">My Profile</Link>
                   <Link class="block px-6 py-2 hover:text-white hover:bg-indigo-500" href="/users">Manage Users</Link>
                   <Link class="block px-6 py-2 w-full text-left hover:text-white hover:bg-indigo-500" href="/logout" method="delete" as="button">Logout</Link>
                 </div>
@@ -53,15 +53,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
 import { Link } from '@inertiajs/inertia-vue3'
-import Icon from '@/Shared/Icon'
-import Logo from '@/Shared/Logo'
-import Dropdown from '@/Shared/Dropdown'
-import MainMenu from '@/Shared/MainMenu'
-import FlashMessages from '@/Shared/FlashMessages'
+import Icon from '@/Shared/Icon.vue'
+import Logo from '@/Shared/Logo.vue'
+import Dropdown from '@/Shared/Dropdown.vue'
+import MainMenu from '@/Shared/MainMenu.vue'
+import FlashMessages from '@/Shared/FlashMessages.vue'
+import { Auth } from '@/types'
 
-export default {
+export default defineComponent({
   components: {
     Dropdown,
     FlashMessages,
@@ -71,7 +73,10 @@ export default {
     MainMenu,
   },
   props: {
-    auth: Object,
+    auth: {
+      type: Object as PropType<Auth>,
+      required: true,
+    },
   },
-}
+})
 </script>

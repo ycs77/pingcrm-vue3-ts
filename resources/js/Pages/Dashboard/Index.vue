@@ -6,14 +6,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { Head } from '@inertiajs/inertia-vue3'
-import Layout from '@/Shared/Layout'
+import Layout from '@/Shared/Layout.vue'
 
-export default {
+export default defineComponent({
   components: {
     Head,
   },
   layout: Layout,
-}
+})
 </script>

@@ -12,13 +12,14 @@
   </button>
 </template>
 
-<script>
-import { createPopper } from '@popperjs/core'
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+import { createPopper, Instance, Placement } from '@popperjs/core'
 
-export default {
+export default defineComponent({
   props: {
     placement: {
-      type: String,
+      type: String as PropType<Placement>,
       default: 'bottom-end',
     },
     autoClose: {
@@ -29,13 +30,14 @@ export default {
   data() {
     return {
       show: false,
+      popper: null as Instance | null,
     }
   },
   watch: {
     show(show) {
       if (show) {
         this.$nextTick(() => {
-          this.popper = createPopper(this.$el, this.$refs.dropdown, {
+          this.popper = createPopper(this.$el, this.$refs.dropdown as HTMLElement, {
             placement: this.placement,
             modifiers: [
               {
@@ -48,7 +50,7 @@ export default {
           })
         })
       } else if (this.popper) {
-        setTimeout(() => this.popper.destroy(), 100)
+        setTimeout(() => this.popper?.destroy(), 100)
       }
     },
   },
@@ -59,5 +61,5 @@ export default {
       }
     })
   },
-}
+})
 </script>

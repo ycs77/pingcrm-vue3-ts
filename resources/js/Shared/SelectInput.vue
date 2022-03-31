@@ -8,21 +8,20 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
 import { v4 as uuid } from 'uuid'
 
-export default {
+export default defineComponent({
   inheritAttrs: false,
   props: {
     id: {
       type: String,
-      default() {
-        return `select-input-${uuid()}`
-      },
+      default: () => `select-input-${uuid()}`,
     },
     error: String,
     label: String,
-    modelValue: [String, Number, Boolean],
+    modelValue: [String, Number, Boolean] as PropType<string | number | boolean | null>,
   },
   emits: ['update:modelValue'],
   data() {
@@ -37,11 +36,11 @@ export default {
   },
   methods: {
     focus() {
-      this.$refs.input.focus()
+      (this.$refs.input as HTMLInputElement).focus()
     },
     select() {
-      this.$refs.input.select()
+      (this.$refs.input as HTMLInputElement).select()
     },
   },
-}
+})
 </script>

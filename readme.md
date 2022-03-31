@@ -1,4 +1,8 @@
-# Ping CRM
+# Ping CRM (Vue 3 Options API x TS)
+
+PingCRM Vue x TS：Options API demo | [Composition API (`<script setup>`) demo](https://github.com/ycs77/pingcrm-vue3-ts/tree/compsition-api)
+
+---
 
 A demo application to illustrate how Inertia.js works.
 
@@ -9,8 +13,8 @@ A demo application to illustrate how Inertia.js works.
 Clone the repo locally:
 
 ```sh
-git clone https://github.com/inertiajs/pingcrm.git pingcrm
-cd pingcrm
+git clone https://github.com/ycs77/pingcrm-vue3-ts.git
+cd pingcrm-vue3-ts
 ```
 
 Install PHP dependencies:
@@ -22,13 +26,13 @@ composer install
 Install NPM dependencies:
 
 ```sh
-npm ci
+yarn install
 ```
 
 Build assets:
 
 ```sh
-npm run dev
+yarn dev
 ```
 
 Setup configuration:
@@ -67,10 +71,24 @@ Run the dev server (the output will give the address):
 php artisan serve
 ```
 
+Run the SSR server:
+
+```sh
+yarn ssr:serve
+```
+
 You're ready to go! Visit Ping CRM in your browser, and login with:
 
 - **Username:** johndoe@example.com
 - **Password:** secret
+
+## Generate Models Type Declaration
+
+To generate the Laravel models's type declaration file:
+
+```sh
+php artisan typescript:generate
+```
 
 ## Running tests
 

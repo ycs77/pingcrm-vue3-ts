@@ -29,14 +29,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
-import Layout from '@/Shared/Layout'
-import TextInput from '@/Shared/TextInput'
-import SelectInput from '@/Shared/SelectInput'
-import LoadingButton from '@/Shared/LoadingButton'
+import Layout from '@/Shared/Layout.vue'
+import TextInput from '@/Shared/TextInput.vue'
+import SelectInput from '@/Shared/SelectInput.vue'
+import LoadingButton from '@/Shared/LoadingButton.vue'
 
-export default {
+export default defineComponent({
   components: {
     Head,
     Link,
@@ -65,5 +66,5 @@ export default {
       this.form.post('/organizations')
     },
   },
-}
+})
 </script>
