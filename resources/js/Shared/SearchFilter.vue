@@ -22,21 +22,17 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script setup lang="ts">
+import { PropType } from 'vue'
 import Dropdown from '@/Shared/Dropdown.vue'
 
-export default defineComponent({
-  components: {
-    Dropdown,
+defineProps({
+  modelValue: String as PropType<string | null>,
+  maxWidth: {
+    type: Number,
+    default: 300,
   },
-  props: {
-    modelValue: String as PropType<string | null>,
-    maxWidth: {
-      type: Number,
-      default: 300,
-    },
-  },
-  emits: ['update:modelValue', 'reset'],
 })
+
+defineEmits(['update:modelValue', 'reset'])
 </script>

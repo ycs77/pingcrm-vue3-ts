@@ -6,14 +6,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { Head } from '@inertiajs/inertia-vue3'
 import Layout from '@/Shared/Layout.vue'
+export default { layout: Layout }
+</script>
 
-export default defineComponent({
-  components: {
-    Head,
-  },
-  layout: Layout,
-})
+<script setup lang="ts">
+import { Head } from '@inertiajs/inertia-vue3'
 </script>

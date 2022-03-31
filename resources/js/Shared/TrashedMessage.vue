@@ -10,14 +10,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import Icon from '@/Shared/Icon.vue'
 
-export default defineComponent({
-  components: {
-    Icon,
-  },
-  emits: ['restore'],
-})
+defineEmits(['restore'])
 </script>

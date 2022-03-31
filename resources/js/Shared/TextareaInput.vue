@@ -1,34 +1,39 @@
 <template>
   <div :class="$attrs.class">
     <label v-if="label" class="form-label" :for="id">{{ label }}:</label>
-    <textarea :id="id" ref="input" v-bind="{ ...$attrs, class: null }" class="form-textarea" :class="{ error: error }" :value="(modelValue as string)" @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
+    <textarea :id="id" ref="inputRef" v-bind="{ ...$attrs, class: null }" class="form-textarea" :class="{ error: error }" :value="(modelValue as string)" @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
     <div v-if="error" class="form-error">{{ error }}</div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+export default { inheritAttrs: false }
+</script>
+
+<script setup lang="ts">
+import { ref, PropType, Ref } from 'vue'
 import { v4 as uuid } from 'uuid'
 
-export default defineComponent({
-  inheritAttrs: false,
-  props: {
-    id: {
-      type: String,
-      default: () => `textarea-input-${uuid()}`,
-    },
-    error: String,
-    label: String,
-    modelValue: String as PropType<string | null>,
+defineProps({
+  id: {
+    type: String,
+    default: () => `textarea-input-${uuid()}`,
   },
-  emits: ['update:modelValue'],
-  methods: {
-    focus() {
-      (this.$refs.input as HTMLInputElement).focus()
-    },
-    select() {
-      (this.$refs.input as HTMLInputElement).select()
-    },
-  },
+  error: String,
+  label: String,
+  modelValue: String as PropType<string | null>,
 })
+
+defineEmits(['update:modelValue'])
+
+const inputRef = ref(null!) as Ref<HTMLInputElement>
+
+const focus = () => {
+  inputRef.value.focus()
+}
+const select = () => {
+  inputRef.value.select()
+}
+
+defineExpose({ focus, select })
 </script>

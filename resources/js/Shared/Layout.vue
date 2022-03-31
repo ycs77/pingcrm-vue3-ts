@@ -53,8 +53,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script setup lang="ts">
+import { PropType } from 'vue'
 import { Link } from '@inertiajs/inertia-vue3'
 import Icon from '@/Shared/Icon.vue'
 import Logo from '@/Shared/Logo.vue'
@@ -63,20 +63,10 @@ import MainMenu from '@/Shared/MainMenu.vue'
 import FlashMessages from '@/Shared/FlashMessages.vue'
 import { Auth } from '@/types'
 
-export default defineComponent({
-  components: {
-    Dropdown,
-    FlashMessages,
-    Icon,
-    Link,
-    Logo,
-    MainMenu,
-  },
-  props: {
-    auth: {
-      type: Object as PropType<Auth>,
-      required: true,
-    },
+defineProps({
+  auth: {
+    type: Object as PropType<Auth>,
+    required: true,
   },
 })
 </script>

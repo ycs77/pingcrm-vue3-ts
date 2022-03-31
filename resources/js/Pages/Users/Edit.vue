@@ -33,63 +33,53 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { Head, Link } from '@inertiajs/inertia-vue3'
 import Layout from '@/Shared/Layout.vue'
+export default { layout: Layout }
+</script>
+
+<script setup lang="ts">
+import { PropType } from 'vue'
+import { Inertia } from '@inertiajs/inertia'
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3'
 import TextInput from '@/Shared/TextInput.vue'
 import FileInput from '@/Shared/FileInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
 import TrashedMessage from '@/Shared/TrashedMessage.vue'
 
-export default defineComponent({
-  components: {
-    FileInput,
-    Head,
-    Link,
-    LoadingButton,
-    SelectInput,
-    TextInput,
-    TrashedMessage,
-  },
-  layout: Layout,
-  props: {
-    user: {
-      /* eslint-disable no-undef */
-      type: Object as PropType<App.Models.User & { photo: string | null }>,
-      required: true,
-    },
-  },
-  remember: 'form',
-  data() {
-    return {
-      form: this.$inertia.form({
-        _method: 'put',
-        first_name: this.user.first_name,
-        last_name: this.user.last_name,
-        email: this.user.email,
-        password: '',
-        owner: this.user.owner,
-        photo: null,
-      }),
-    }
-  },
-  methods: {
-    update() {
-      this.form.post(`/users/${this.user.id}`, {
-        onSuccess: () => this.form.reset('password', 'photo'),
-      })
-    },
-    destroy() {
-      if (confirm('Are you sure you want to delete this user?')) {
-        this.$inertia.delete(`/users/${this.user.id}`)
-      }
-    },
-    restore() {
-      if (confirm('Are you sure you want to restore this user?')) {
-        this.$inertia.put(`/users/${this.user.id}/restore`)
-      }
-    },
+const props = defineProps({
+  user: {
+    /* eslint-disable no-undef */
+    type: Object as PropType<App.Models.User & { photo: string | null }>,
+    required: true,
   },
 })
+
+const form = useForm('default', {
+  _method: 'put',
+  first_name: props.user.first_name,
+  last_name: props.user.last_name,
+  email: props.user.email,
+  password: '',
+  owner: props.user.owner,
+  photo: null,
+})
+
+const update = () => {
+  form.post(`/users/${props.user.id}`, {
+    onSuccess: () => form.reset('password', 'photo'),
+  })
+}
+
+const destroy = () => {
+  if (confirm('Are you sure you want to delete this user?')) {
+    Inertia.delete(`/users/${props.user.id}`)
+  }
+}
+
+const restore = () => {
+  if (confirm('Are you sure you want to restore this user?')) {
+    Inertia.put(`/users/${props.user.id}/restore`)
+  }
+}
 </script>

@@ -9,20 +9,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script setup lang="ts">
+import { PropType } from 'vue'
 import { Link } from '@inertiajs/inertia-vue3'
 import { PaginationLink } from '@/types'
 
-export default defineComponent({
-  components: {
-    Link,
-  },
-  props: {
-    links: {
-      type: Array as PropType<PaginationLink[]>,
-      required: true,
-    },
+defineProps({
+  links: {
+    type: Array as PropType<PaginationLink[]>,
+    required: true,
   },
 })
 </script>

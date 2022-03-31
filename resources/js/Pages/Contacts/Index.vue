@@ -68,58 +68,45 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import Layout from '@/Shared/Layout.vue'
+export default { layout: Layout }
+</script>
+
+<script setup lang="ts">
+import { ref, watch, PropType } from 'vue'
+import { Inertia } from '@inertiajs/inertia'
 import { Head, Link } from '@inertiajs/inertia-vue3'
 import Icon from '@/Shared/Icon.vue'
 import pickBy from 'lodash/pickBy'
-import Layout from '@/Shared/Layout.vue'
 import throttle from 'lodash/throttle'
 import mapValues from 'lodash/mapValues'
 import Pagination from '@/Shared/Pagination.vue'
 import SearchFilter from '@/Shared/SearchFilter.vue'
 import { Filters, ModelPagination } from '@/types'
 
-export default defineComponent({
-  components: {
-    Head,
-    Icon,
-    Link,
-    Pagination,
-    SearchFilter,
+const props = defineProps({
+  filters: {
+    type: Object as PropType<Filters>,
+    required: true,
   },
-  layout: Layout,
-  props: {
-    filters: {
-      type: Object as PropType<Filters>,
-      required: true,
-    },
-    contacts: {
-      /* eslint-disable no-undef */
-      type: Object as PropType<ModelPagination<App.Models.Contact>>,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      form: {
-        search: this.filters.search,
-        trashed: this.filters.trashed,
-      },
-    }
-  },
-  watch: {
-    form: {
-      deep: true,
-      handler: throttle(function () {
-        // @ts-ignore
-        this.$inertia.get('/contacts', pickBy(this.form), { preserveState: true })
-      }, 150),
-    },
-  },
-  methods: {
-    reset() {
-      this.form = mapValues(this.form, () => null)
-    },
+  contacts: {
+    /* eslint-disable no-undef */
+    type: Object as PropType<ModelPagination<App.Models.Contact>>,
+    required: true,
   },
 })
+
+const form = ref({
+  search: props.filters.search,
+  trashed: props.filters.trashed,
+})
+
+// prettier-ignore
+watch(form, throttle(() => {
+  Inertia.get('/contacts', pickBy(form.value), { preserveState: true })
+}, 150), { deep: true })
+
+const reset = () => {
+  form.value = mapValues(form.value, () => null)
+}
 </script>

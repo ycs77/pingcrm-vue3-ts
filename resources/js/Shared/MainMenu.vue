@@ -27,24 +27,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { Link } from '@inertiajs/inertia-vue3'
+<script setup lang="ts">
+import { reactive } from 'vue'
+import { Link, usePage } from '@inertiajs/inertia-vue3'
 import Icon from '@/Shared/Icon.vue'
 
-export default defineComponent({
-  components: {
-    Icon,
-    Link,
-  },
-  methods: {
-    isUrl(...urls: string[]): boolean {
-      let currentUrl = this.$page.url.substr(1)
-      if (urls[0] === '') {
-        return currentUrl === ''
-      }
-      return !!urls.filter((url) => currentUrl.startsWith(url)).length
-    },
-  },
-})
+const page = reactive(usePage())
+
+const isUrl = (...urls: string[]): boolean => {
+  let currentUrl = page.url.substr(1)
+  if (urls[0] === '') {
+    return currentUrl === ''
+  }
+  return !!urls.filter((url) => currentUrl.startsWith(url)).length
+}
 </script>

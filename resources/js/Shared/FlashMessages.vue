@@ -25,22 +25,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { ref, reactive, watch } from 'vue'
+import { usePage } from '@inertiajs/inertia-vue3'
 
-export default defineComponent({
-  data() {
-    return {
-      show: true,
-    }
-  },
-  watch: {
-    '$page.props.flash': {
-      handler() {
-        this.show = true
-      },
-      deep: true,
-    },
-  },
-})
+const page = reactive(usePage())
+const show = ref(false)
+
+// prettier-ignore
+watch(() => page.props.flash, () => {
+  show.value = true
+}, { deep: true })
 </script>

@@ -17,6 +17,7 @@ module.exports = {
     amd: true,
     browser: true,
     es6: true,
+    'vue/setup-compiler-macros': true,
   },
   rules: {
     indent: ['error', 2],
@@ -39,8 +40,10 @@ module.exports = {
         },
       },
     ],
+    'vue/script-setup-uses-vars': 'error',
     '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
     '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
   ignorePatterns: ['resources/js/models.d.ts'],
 }

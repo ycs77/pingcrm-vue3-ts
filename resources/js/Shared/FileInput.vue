@@ -2,7 +2,7 @@
   <div>
     <label v-if="label" class="form-label">{{ label }}:</label>
     <div class="form-input p-0" :class="{ error: errors.length }">
-      <input ref="file" type="file" :accept="accept" class="hidden" @change="change" />
+      <input ref="fileRef" type="file" :accept="accept" class="hidden" @change="change" />
       <div v-if="!modelValue" class="p-2">
         <button type="button" class="px-4 py-1 text-white text-xs font-medium bg-gray-500 hover:bg-gray-700 rounded-sm" @click="browse">Browse</button>
       </div>
@@ -17,41 +17,44 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script setup lang="ts">
+import { ref, watch, PropType, Ref } from 'vue'
 
-export default defineComponent({
-  props: {
-    modelValue: File as PropType<File | null>,
-    label: String,
-    accept: String,
-    errors: {
-      type: Array,
-      default: () => [],
-    },
-  },
-  emits: ['update:modelValue'],
-  watch: {
-    modelValue(value) {
-      if (!value) {
-        (this.$refs.file as HTMLInputElement).value = ''
-      }
-    },
-  },
-  methods: {
-    filesize(size: number) {
-      var i = Math.floor(Math.log(size) / Math.log(1024))
-      return (size / Math.pow(1024, i)).toFixed(2) + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
-    },
-    browse() {
-      (this.$refs.file as HTMLElement).click()
-    },
-    change(e: Event) {
-      this.$emit('update:modelValue', (e.target as HTMLInputElement).files?.[0])
-    },
-    remove() {
-      this.$emit('update:modelValue', null)
-    },
+const props = defineProps({
+  modelValue: File as PropType<File | null>,
+  label: String,
+  accept: String,
+  errors: {
+    type: Array,
+    default: () => [],
   },
 })
+
+const emit = defineEmits(['update:modelValue'])
+
+const fileRef = ref(null!) as Ref<HTMLInputElement>
+
+// prettier-ignore
+watch(() => props.modelValue, (value) => {
+  if (!value) {
+    fileRef.value.value = ''
+  }
+})
+
+const filesize = (size: number) => {
+  var i = Math.floor(Math.log(size) / Math.log(1024))
+  return (size / Math.pow(1024, i)).toFixed(2) + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
+}
+
+const browse = () => {
+  fileRef.value.click()
+}
+const change = (e: Event) => {
+  emit('update:modelValue', (e.target as HTMLInputElement).files?.[0])
+}
+const remove = () => {
+  emit('update:modelValue', null)
+}
+
+defineExpose({ browse, change, remove })
 </script>

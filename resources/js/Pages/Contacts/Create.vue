@@ -35,50 +35,39 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { Head, Link } from '@inertiajs/inertia-vue3'
 import Layout from '@/Shared/Layout.vue'
+export default { layout: Layout }
+</script>
+
+<script setup lang="ts">
+import { PropType } from 'vue'
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3'
 import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
 
-export default defineComponent({
-  components: {
-    Head,
-    Link,
-    LoadingButton,
-    SelectInput,
-    TextInput,
-  },
-  layout: Layout,
-  props: {
-    organizations: {
-      /* eslint-disable no-undef */
-      type: Array as PropType<App.Models.Organization[]>,
-      required: true,
-    },
-  },
-  remember: 'form',
-  data() {
-    return {
-      form: this.$inertia.form({
-        first_name: '',
-        last_name: '',
-        organization_id: null,
-        email: '',
-        phone: '',
-        address: '',
-        city: '',
-        region: '',
-        country: '',
-        postal_code: '',
-      }),
-    }
-  },
-  methods: {
-    store() {
-      this.form.post('/contacts')
-    },
+defineProps({
+  organizations: {
+    /* eslint-disable no-undef */
+    type: Array as PropType<App.Models.Organization[]>,
+    required: true,
   },
 })
+
+const form = useForm('default', {
+  first_name: '',
+  last_name: '',
+  organization_id: null,
+  email: '',
+  phone: '',
+  address: '',
+  city: '',
+  region: '',
+  country: '',
+  postal_code: '',
+})
+
+const store = () => {
+  form.post('/contacts')
+}
 </script>

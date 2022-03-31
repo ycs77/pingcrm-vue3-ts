@@ -27,41 +27,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { Head, Link } from '@inertiajs/inertia-vue3'
 import Layout from '@/Shared/Layout.vue'
+export default { layout: Layout }
+</script>
+
+<script setup lang="ts">
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3'
 import FileInput from '@/Shared/FileInput.vue'
 import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
 
-export default defineComponent({
-  components: {
-    FileInput,
-    Head,
-    Link,
-    LoadingButton,
-    SelectInput,
-    TextInput,
-  },
-  layout: Layout,
-  remember: 'form',
-  data() {
-    return {
-      form: this.$inertia.form({
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        owner: false,
-        photo: null,
-      }),
-    }
-  },
-  methods: {
-    store() {
-      this.form.post('/users')
-    },
-  },
+const form = useForm('default', {
+  first_name: '',
+  last_name: '',
+  email: '',
+  password: '',
+  owner: false,
+  photo: null,
 })
+
+const store = () => {
+  form.post('/users')
+}
 </script>

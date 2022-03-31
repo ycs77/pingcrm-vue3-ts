@@ -38,67 +38,58 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { Head, Link } from '@inertiajs/inertia-vue3'
 import Layout from '@/Shared/Layout.vue'
+export default { layout: Layout }
+</script>
+
+<script setup lang="ts">
+import { PropType } from 'vue'
+import { Inertia } from '@inertiajs/inertia'
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3'
 import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
 import TrashedMessage from '@/Shared/TrashedMessage.vue'
 
-export default defineComponent({
-  components: {
-    Head,
-    Link,
-    LoadingButton,
-    SelectInput,
-    TextInput,
-    TrashedMessage,
+const props = defineProps({
+  contact: {
+    /* eslint-disable no-undef */
+    type: Object as PropType<App.Models.Contact>,
+    required: true,
   },
-  layout: Layout,
-  props: {
-    contact: {
-      /* eslint-disable no-undef */
-      type: Object as PropType<App.Models.Contact>,
-      required: true,
-    },
-    organizations: {
-      /* eslint-disable no-undef */
-      type: Array as PropType<App.Models.Organization[]>,
-      required: true,
-    },
-  },
-  remember: 'form',
-  data() {
-    return {
-      form: this.$inertia.form({
-        first_name: this.contact.first_name,
-        last_name: this.contact.last_name,
-        organization_id: this.contact.organization_id,
-        email: this.contact.email,
-        phone: this.contact.phone,
-        address: this.contact.address,
-        city: this.contact.city,
-        region: this.contact.region,
-        country: this.contact.country,
-        postal_code: this.contact.postal_code,
-      }),
-    }
-  },
-  methods: {
-    update() {
-      this.form.put(`/contacts/${this.contact.id}`)
-    },
-    destroy() {
-      if (confirm('Are you sure you want to delete this contact?')) {
-        this.$inertia.delete(`/contacts/${this.contact.id}`)
-      }
-    },
-    restore() {
-      if (confirm('Are you sure you want to restore this contact?')) {
-        this.$inertia.put(`/contacts/${this.contact.id}/restore`)
-      }
-    },
+  organizations: {
+    /* eslint-disable no-undef */
+    type: Array as PropType<App.Models.Organization[]>,
+    required: true,
   },
 })
+
+const form = useForm('default', {
+  first_name: props.contact.first_name,
+  last_name: props.contact.last_name,
+  organization_id: props.contact.organization_id,
+  email: props.contact.email,
+  phone: props.contact.phone,
+  address: props.contact.address,
+  city: props.contact.city,
+  region: props.contact.region,
+  country: props.contact.country,
+  postal_code: props.contact.postal_code,
+})
+
+const update = () => {
+  form.put(`/contacts/${props.contact.id}`)
+}
+
+const destroy = () => {
+  if (confirm('Are you sure you want to delete this contact?')) {
+    Inertia.delete(`/contacts/${props.contact.id}`)
+  }
+}
+
+const restore = () => {
+  if (confirm('Are you sure you want to restore this contact?')) {
+    Inertia.put(`/contacts/${props.contact.id}/restore`)
+  }
+}
 </script>

@@ -5,12 +5,8 @@
   </button>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  props: {
-    loading: Boolean,
-  },
+<script setup lang="ts">
+defineProps({
+  loading: Boolean,
 })
 </script>
