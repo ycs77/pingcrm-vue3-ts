@@ -26,17 +26,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import Layout from '@/Shared/Layout.vue'
-export default { layout: Layout }
-</script>
-
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3'
+import Layout from '@/Shared/Layout.vue'
 import FileInput from '@/Shared/FileInput.vue'
 import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
+
+defineOptions({ layout: Layout })
 
 const form = useForm('default', {
   first_name: '',

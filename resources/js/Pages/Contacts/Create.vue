@@ -34,17 +34,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import Layout from '@/Shared/Layout.vue'
-export default { layout: Layout }
-</script>
-
 <script setup lang="ts">
 import { PropType } from 'vue'
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3'
+import Layout from '@/Shared/Layout.vue'
 import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
+
+defineOptions({ layout: Layout })
 
 defineProps({
   organizations: {

@@ -8,13 +8,11 @@
   </div>
 </template>
 
-<script lang="ts">
-export default { inheritAttrs: false }
-</script>
-
 <script setup lang="ts">
 import { ref, watch, PropType, Ref } from 'vue'
 import { v4 as uuid } from 'uuid'
+
+defineOptions({ inheritAttrs: false })
 
 const props = defineProps({
   id: {

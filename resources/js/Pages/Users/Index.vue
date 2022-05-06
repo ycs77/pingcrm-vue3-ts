@@ -65,21 +65,19 @@
   </div>
 </template>
 
-<script lang="ts">
-import Layout from '@/Shared/Layout.vue'
-export default { layout: Layout }
-</script>
-
 <script setup lang="ts">
 import { ref, watch, PropType } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import { Head, Link } from '@inertiajs/inertia-vue3'
 import Icon from '@/Shared/Icon.vue'
 import pickBy from 'lodash/pickBy'
+import Layout from '@/Shared/Layout.vue'
 import throttle from 'lodash/throttle'
 import mapValues from 'lodash/mapValues'
 import SearchFilter from '@/Shared/SearchFilter.vue'
 import { Filters } from '@/types'
+
+defineOptions({ layout: Layout })
 
 const props = defineProps({
   filters: {

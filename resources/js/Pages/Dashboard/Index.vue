@@ -6,11 +6,9 @@
   </div>
 </template>
 
-<script lang="ts">
-import Layout from '@/Shared/Layout.vue'
-export default { layout: Layout }
-</script>
-
 <script setup lang="ts">
 import { Head } from '@inertiajs/inertia-vue3'
+import Layout from '@/Shared/Layout.vue'
+
+defineOptions({ layout: Layout })
 </script>

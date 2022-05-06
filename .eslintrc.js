@@ -45,5 +45,8 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
   },
+  globals: {
+    defineOptions: 'readonly',
+  },
   ignorePatterns: ['resources/js/models.d.ts'],
 }

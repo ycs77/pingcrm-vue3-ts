@@ -29,8 +29,8 @@ const props = defineProps({
 
 const show = ref(false)
 const popper = ref(null) as Ref<Instance | null>
-const buttonRef = ref(null!) as Ref<HTMLElement>
-const dropdownRef = ref(null!) as Ref<HTMLElement>
+const buttonRef = ref<HTMLElement>(null!)
+const dropdownRef = ref<HTMLElement>(null!)
 
 watch(show, (show) => {
   if (show) {

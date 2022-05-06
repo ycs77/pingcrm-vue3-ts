@@ -9,6 +9,7 @@ module.exports = {
     },
     extensions: ['.ts', '.vue', '.json'],
   },
+  plugins: [require('unplugin-vue-define-options/webpack')()],
   devServer: {
     allowedHosts: 'all',
   },
